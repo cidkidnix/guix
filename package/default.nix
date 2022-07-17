@@ -20,7 +20,6 @@
 , perl534Packages
 , storeDir ? null
 , stateDir ? null
-, enablezstd ? true
 }:
 
 stdenv.mkDerivation rec {
@@ -55,7 +54,7 @@ stdenv.mkDerivation rec {
       guile-zlib
       guile-zstd
       bytestructures
-    ] ++ lib.optionals enablezstd [ guile-zstd ]
+    ]
 
       (m: (m.override { guile = guile_3_0; }).out);
 
