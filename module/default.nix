@@ -16,6 +16,7 @@ let
       (user: {
         name = user.name;
         value = user;
+        group = "${cfg.group}";
       })
       (builtins.genList guixBuildUser numberOfUsers));
 
@@ -96,9 +97,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ guixWrapped (lib.lowPrio guixWrapped) ];
 
-    users.users = guixBuildUsers 10 // {
-      group = "${cfg.group}";
-    };
+    users.users = guixBuildUsers 10;
     users.groups = { "${cfg.group}" = { }; };
 
     systemd.services.guix-daemon = {
