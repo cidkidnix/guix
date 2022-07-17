@@ -1,15 +1,23 @@
-{ stdenv, fetchFromGitLab, guile, libgit2, bytestructures, autoreconfHook
-, pkg-config, texinfo }:
+{ stdenv
+, lib
+, fetchFromGitLab
+, guile
+, libgit2
+, bytestructures
+, autoreconfHook
+, pkg-config
+, texinfo
+}:
 
 stdenv.mkDerivation rec {
   pname = "guile-git";
-  version = "0.3.0";
+  version = "0.5.2";
 
   src = fetchFromGitLab {
     owner = "guile-git";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1s77s70gzfj6h7bglq431kw8l4iknhsfpc0mnvcp4lkhwdcgyn1n";
+    sha256 = "sha256-x6apF9fmwzrkyzAexKjClOTFrbE31+fVhSLyFZkKRYU=";
   };
 
   postConfigure = ''
@@ -21,7 +29,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ guile ];
   propagatedBuildInputs = [ libgit2 bytestructures ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Bindings to Libgit2 for GNU Guile";
     homepage = "https://gitlab.com/guile-git/guile-git";
     license = licenses.gpl3;

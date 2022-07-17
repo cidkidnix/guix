@@ -1,13 +1,24 @@
-{ stdenv, pkgs, lib, fetchurl, pkg-config, makeWrapper, zlib, bzip2, guile
-, guilePackages, storeDir ? null, stateDir ? null }:
+{ stdenv
+, pkgs
+, lib
+, fetchurl
+, pkg-config
+, makeWrapper
+, zlib
+, bzip2
+, guile
+, guilePackages
+, storeDir ? null
+, stateDir ? null
+}:
 
 stdenv.mkDerivation rec {
   pname = "guix";
-  version = "1.2.0";
+  version = "1.3.0";
 
   src = fetchurl {
     url = "mirror://gnu/guix/${pname}-${version}.tar.gz";
-    sha256 = "sha256-Xs33ztJbH7DKfFfnlLe2DIp63LFSYd7CrzeSXIOMbXQ=";
+    sha256 = "sha256-yw9GHEjVgj3+9/iIeaF5c37hTE3ZNzLWcZMvxOJQU+g=";
   };
 
   postConfigure = ''
@@ -26,24 +37,29 @@ stdenv.mkDerivation rec {
       guile-gnutls
       guile-zlib
       bytestructures
-    ] (m: (m.override { inherit guile; }).out);
+    ]
+      (m: (m.override { inherit guile; }).out);
 
   nativeBuildInputs = [ pkg-config makeWrapper ];
   buildInputs = [ zlib bzip2 ] ++ modules;
   propagatedBuildInputs = [ guile ];
 
-  GUILE_LOAD_PATH = let
-    guilePath = [
-      "\${out}/share/guile/site"
-      "${guilePackages.guile-gnutls.out}/lib/guile/extensions"
-    ] ++ (lib.concatMap (module: [ "${module}/share/guile/site" ]) modules);
-  in "${lib.concatStringsSep ":" guilePath}";
-  GUILE_LOAD_COMPILED_PATH = let
-    guilePath = [
-      "\${out}/share/guile/ccache"
-      "${guilePackages.guile-gnutls.out}/lib/guile/extensions"
-    ] ++ (lib.concatMap (module: [ "${module}/share/guile/ccache" ]) modules);
-  in "${lib.concatStringsSep ":" guilePath}";
+  GUILE_LOAD_PATH =
+    let
+      guilePath = [
+        "\${out}/share/guile/site"
+        "${guilePackages.guile-gnutls.out}/lib/guile/extensions"
+      ] ++ (lib.concatMap (module: [ "${module}/share/guile/site" ]) modules);
+    in
+    "${lib.concatStringsSep ":" guilePath}";
+  GUILE_LOAD_COMPILED_PATH =
+    let
+      guilePath = [
+        "\${out}/share/guile/ccache"
+        "${guilePackages.guile-gnutls.out}/lib/guile/extensions"
+      ] ++ (lib.concatMap (module: [ "${module}/share/guile/ccache" ]) modules);
+    in
+    "${lib.concatStringsSep ":" guilePath}";
 
   configureFlags = [ ]
     ++ lib.optional (storeDir != null) "--with-store-dir=${storeDir}"

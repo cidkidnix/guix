@@ -12,10 +12,12 @@ let
   };
 
   guixBuildUsers = numberOfUsers:
-    builtins.listToAttrs (map (user: {
-      name = user.name;
-      value = user;
-    }) (builtins.genList guixBuildUser numberOfUsers));
+    builtins.listToAttrs (map
+      (user: {
+        name = user.name;
+        value = user;
+      })
+      (builtins.genList guixBuildUser numberOfUsers));
 
   guixEnv = {
     GUIX_STATE_DIRECTORY = "/gnu/var";
@@ -29,7 +31,8 @@ let
     (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
     exec ${cfg.package}/bin/guix $@
   '';
-in {
+in
+{
   options.services.guix = with lib; {
     enable = mkEnableOption "the guix daemon and init /gnu/store";
 
@@ -93,7 +96,9 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ guixWrapped (lib.lowPrio guixWrapped) ];
 
-    users.users = guixBuildUsers 10;
+    users.users = guixBuildUsers 10 // {
+      group = "${cfg.group}";
+    };
     users.groups = { "${cfg.group}" = { }; };
 
     systemd.services.guix-daemon = {

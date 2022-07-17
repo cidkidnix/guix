@@ -1,11 +1,14 @@
 {
   description = "A package and module for using GNU Guix on Nix(OS)";
 
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
   outputs = { self, nixpkgs }:
     let
       forAllSystems =
         nixpkgs.lib.genAttrs [ "x86_64-linux" "i686-linux" "aarch64-linux" ];
-    in {
+    in
+    {
 
       overlay = final: prev:
         let guilePackages = prev.callPackages ./guile { };

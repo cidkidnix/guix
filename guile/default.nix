@@ -15,7 +15,8 @@ let
           "--with-guile-extension-dir=\${out}/lib/guile/extensions"
         ];
       });
-    in {
+    in
+    {
       inherit guile-gnutls;
 
       guile-gcrypt = callPackage ./guile-gcrypt { };
@@ -36,4 +37,5 @@ let
 
       guile-zlib = callPackage ./guile-zlib { };
     };
-in lib.fix' (lib.extends overrides packages)
+in
+lib.fix' (lib.extends overrides packages)
