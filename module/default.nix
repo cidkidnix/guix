@@ -7,6 +7,7 @@ let
     name = "${cfg.userPrefix}${toString id}";
     createHome = false;
     description = "Guix build user ${toString id}";
+    group = cfg.group;
     extraGroups = [ cfg.group ];
     isSystemUser = true;
   };
@@ -16,7 +17,6 @@ let
       (user: {
         name = user.name;
         value = user;
-        group = "${cfg.group}";
       })
       (builtins.genList guixBuildUser numberOfUsers));
 
