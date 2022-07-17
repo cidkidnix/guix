@@ -2,24 +2,41 @@
 , pkgs
 , lib
 , fetchurl
+, fetchgit
+, autoconf
+, gettext
+, automake
+, texinfo
+, help2man
+, glibcLocales
+, autoreconfHook
 , pkg-config
 , makeWrapper
 , zlib
+, zstd
 , bzip2
-, guile
+, guile_3_0
 , guilePackages
+, perl534Packages
 , storeDir ? null
 , stateDir ? null
+, enablezstd ? true
 }:
 
 stdenv.mkDerivation rec {
   pname = "guix";
-  version = "1.3.0";
+  version = "1.4.0";
 
-  src = fetchurl {
-    url = "mirror://gnu/guix/${pname}-${version}.tar.gz";
-    sha256 = "sha256-yw9GHEjVgj3+9/iIeaF5c37hTE3ZNzLWcZMvxOJQU+g=";
+  src = fetchgit {
+    url = "https://git.savannah.gnu.org/git/guix.git";
+    rev = "6913c26d116c8fe828a2ff91140be6a40509bdd9";
+    sha256 = "sha256-XJpqgO8dMoRCdZf3V6w7TwnRbCfZAdIQSqYVTRp4xXo=";
+    fetchSubmodules = true;
   };
+
+  preAutoreconf = ''
+    ./bootstrap
+  '';
 
   postConfigure = ''
     sed -i '/guilemoduledir\s*=/s%=.*%=''${out}/share/guile/site%' Makefile;
@@ -36,13 +53,27 @@ stdenv.mkDerivation rec {
       guile-ssh
       guile-gnutls
       guile-zlib
+      guile-zstd
       bytestructures
-    ]
-      (m: (m.override { inherit guile; }).out);
+    ] ++ lib.optionals enablezstd [ guile-zstd ]
 
-  nativeBuildInputs = [ pkg-config makeWrapper ];
-  buildInputs = [ zlib bzip2 ] ++ modules;
-  propagatedBuildInputs = [ guile ];
+      (m: (m.override { guile = guile_3_0; }).out);
+
+  nativeBuildInputs = [
+    pkg-config
+    makeWrapper
+    automake
+    autoconf
+    gettext
+    automake
+    texinfo
+    glibcLocales
+    autoreconfHook
+    help2man
+    perl534Packages.Po4a
+  ];
+  buildInputs = [ zlib bzip2 zstd ] ++ modules;
+  propagatedBuildInputs = [ guile_3_0 ];
 
   GUILE_LOAD_PATH =
     let
@@ -75,7 +106,7 @@ stdenv.mkDerivation rec {
       --prefix GUILE_LOAD_COMPILED_PATH : "${GUILE_LOAD_COMPILED_PATH}"
   '';
 
-  passthru = { inherit guile; };
+  passthru = { inherit guile_3_0; };
 
   meta = with lib; {
     description =

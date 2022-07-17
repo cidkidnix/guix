@@ -15,8 +15,13 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://notabug.org/guile-zstd/${pname}/archive/v${version}.tar.gz";
-    sha256 = lib.fakeHash;
+    sha256 = "sha256-blfvUk8gyrecpf1iNmxUNfcc9lL1gvwefWJYXpDUmcU=";
   };
+
+  postConfigure = ''
+    sed -i '/moddir\s*=/s%=.*%=''${out}/share/guile/site%' Makefile;
+    sed -i '/godir\s*=/s%=.*%=''${out}/share/guile/ccache%' Makefile;
+  '';
 
   nativeBuildInputs = [ autoreconfHook pkgconfig texinfo ];
   buildInputs = [ guile zstd ];

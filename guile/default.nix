@@ -36,6 +36,8 @@ let
       guile-ssh = callPackage ./guile-ssh { };
 
       guile-zlib = callPackage ./guile-zlib { };
+
+      guile-zstd = callPackage ./guile-zstd { };
     };
 in
 lib.fix' (lib.extends overrides packages)
