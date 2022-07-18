@@ -16,7 +16,7 @@
           guix = prev.callPackage ./package { inherit guilePackages; };
           inherit (guilePackages)
             guile-gnutls guile-gcrypt guile-git guile-json guile-sqlite3
-            guile-ssh;
+            guile-ssh guile-zstd;
           scheme-bytestructures = guilePackages.bytestructures;
         };
 

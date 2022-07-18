@@ -24,12 +24,12 @@
 
 stdenv.mkDerivation rec {
   pname = "guix";
-  version = "1.4.0";
+  version = "unstable";
 
   src = fetchgit {
     url = "https://git.savannah.gnu.org/git/guix.git";
-    rev = "6913c26d116c8fe828a2ff91140be6a40509bdd9";
-    sha256 = "sha256-XJpqgO8dMoRCdZf3V6w7TwnRbCfZAdIQSqYVTRp4xXo=";
+    rev = "236746900f062b34c857c4aab21709bcf1448ac7";
+    sha256 = "sha256-3In9bC1wlOwhjMFpYNJ922imN8vvnWXq2M/X8C+BP9M=";
     fetchSubmodules = true;
   };
 
@@ -56,7 +56,7 @@ stdenv.mkDerivation rec {
       bytestructures
     ]
 
-      (m: (m.override { guile = guile_3_0; }).out);
+      (m: (m.override { inherit guile_3_0; }).out);
 
   nativeBuildInputs = [
     pkg-config

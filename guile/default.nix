@@ -1,4 +1,4 @@
-{ lib, newScope, guile, gnutls, overrides ? (self: super: { }) }:
+{ lib, newScope, guile_3_0, gnutls, overrides ? (self: super: { }) }:
 
 let
   packages = self:
@@ -6,7 +6,7 @@ let
       callPackage = newScope self;
 
       guile-gnutls = (gnutls.override {
-        inherit guile;
+        guile = guile_3_0;
         guileBindings = true;
       }).overrideAttrs (attrs: {
         configureFlags = [
