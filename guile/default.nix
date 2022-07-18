@@ -19,6 +19,8 @@ let
     {
       inherit guile-gnutls;
 
+      guile = guile_3_0;
+
       guile-gcrypt = callPackage ./guile-gcrypt { };
 
       bytestructures = callPackage ./bytestructures { };
