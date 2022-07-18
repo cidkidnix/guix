@@ -28,8 +28,7 @@ let
   };
 
   guixWrapped = pkgs.writeShellScriptBin "guix" ''
-    ${lib.concatStringsSep "\n"
-    (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
     exec ${cfg.package}/bin/guix $@
   '';
 in
@@ -107,8 +106,7 @@ in
         ${guixWrapped}/bin/guix archive --authorize < \
           ${cfg.package}/share/guix/ci.guix.gnu.org.pub
 
-        ${lib.concatStringsSep "\n"
-        (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
         ROOT_PROFILE=$GUIX_STATE_DIRECTORY/profiles/per-user/root/current-guix
 
         DAEMON=$ROOT_PROFILE/bin/guix-daemon
@@ -118,9 +116,7 @@ in
           export GUIX_LOCPATH="${pkgs.glibcLocales}/lib/locale"
         fi
 
-        exec $DAEMON --build-users-group=${cfg.group} ${
-          lib.concatStringsSep " " cfg.extraArgs
-        }
+        exec $DAEMON --build-users-group=${cfg.group} ${lib.concatStringsSep " " cfg.extraArgs}
       '';
       serviceConfig = {
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /gnu/store";
@@ -140,8 +136,7 @@ in
         ${guixWrapped}/bin/guix archive --authorize < \
           ${cfg.package}/share/guix/ci.guix.gnu.org.pub
 
-        ${lib.concatStringsSep "\n"
-        (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
         ROOT_PROFILE=$GUIX_STATE_DIRECTORY/profiles/per-user/root/current-guix
 
         DAEMON=$ROOT_PROFILE/bin/guix
