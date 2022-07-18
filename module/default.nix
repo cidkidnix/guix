@@ -109,10 +109,10 @@ in
 
         ${lib.concatStringsSep "\n"
         (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
-        ROOT_PROFILE=$GUIX_STATE_DIRECTORY"/profiles/per-user/root/current-guix"
+        ROOT_PROFILE=$GUIX_STATE_DIRECTORY/profiles/per-user/root/current-guix
 
-        DAEMON=$ROOT_PROFILE"/bin/guix-daemon"
-        export GUIX_LOCPATH=$ROOT_PROFILE"/lib/locale";
+        DAEMON=$ROOT_PROFILE/bin/guix-daemon
+        export GUIX_LOCPATH=$ROOT_PROFILE/lib/locale;
         if [ ! -x "$DAEMON" ]; then
           DAEMON="${cfg.package}/bin/guix-daemon"
           export GUIX_LOCPATH="${pkgs.glibcLocales}/lib/locale"
@@ -128,8 +128,7 @@ in
         RemainAfterExit = "yes";
         StandardOutput = "syslog";
         StandardError = "syslog";
-        TasksMax =
-          8192; # See <https://lists.gnu.org/archive/html/guix-devel/2016-04/msg00608.html>.
+        TasksMax = 8192; # See <https://lists.gnu.org/archive/html/guix-devel/2016-04/msg00608.html>.
       };
       wantedBy = [ "multi-user.target" ];
     };
@@ -143,10 +142,10 @@ in
 
         ${lib.concatStringsSep "\n"
         (lib.mapAttrsToList (k: v: "export ${k}=${v}") guixEnv)}
-        ROOT_PROFILE=$GUIX_STATE_DIRECTORY"/profiles/per-user/root/current-guix"
+        ROOT_PROFILE=$GUIX_STATE_DIRECTORY/profiles/per-user/root/current-guix
 
-        DAEMON=$ROOT_PROFILE"/bin/guix"
-        export GUIX_LOCPATH=$ROOT_PROFILE"/lib/locale";
+        DAEMON=$ROOT_PROFILE/bin/guix
+        export GUIX_LOCPATH=$ROOT_PROFILE/lib/locale;
         if [ ! -x "$DAEMON" ]; then
           DAEMON="${cfg.package}/bin/guix"
           export GUIX_LOCPATH="${pkgs.glibcLocales}/lib/locale"

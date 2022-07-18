@@ -5,8 +5,8 @@ stdenv.mkDerivation rec {
   version = "0.2.7";
 
   src = fetchurl {
-    url = "mirror://savannah/guile-avahi/${pname}-${version}.tar.gz";
-    sha256 = lib.fakeHash;
+    url = "https://download.savannah.nongnu.org/releases/${pname}/${pname}-${version}.tar.gz";
+    sha256 = "sha256-5O87hF8SGILHwM8E+BocuP02DG9ktWuGjeVUYhT5BN4=";
   };
 
   postConfigure = ''

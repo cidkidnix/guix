@@ -27,6 +27,12 @@ let
 
       lzlib = callPackage ./lzlib { };
 
+      guile-avahi = callPackage ./guile-avahi { };
+
+      guile-lib = callPackage ./guile-lib { };
+
+      guile-semver = callPackage ./guile-semver { };
+
       guile-git = callPackage ./guile-git { };
 
       guile-json = callPackage ./guile-json { };

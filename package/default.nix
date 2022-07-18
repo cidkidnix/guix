@@ -53,6 +53,9 @@ stdenv.mkDerivation rec {
       guile-gnutls
       guile-zlib
       guile-zstd
+      guile-avahi
+      guile-semver
+      guile-lib
       bytestructures
     ]
 
