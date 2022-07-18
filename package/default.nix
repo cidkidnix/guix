@@ -18,8 +18,8 @@
 , guile_3_0
 , guilePackages
 , perl534Packages
-, storeDir ? null
-, stateDir ? null
+, storeDir ? "/gnu/store"
+, stateDir ? "/gnu/var"
 }:
 
 stdenv.mkDerivation rec {

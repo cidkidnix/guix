@@ -21,9 +21,9 @@ let
       (builtins.genList guixBuildUser numberOfUsers));
 
   guixEnv = {
-    GUIX_STATE_DIRECTORY = "/gnu/var";
+    GUIX_STATE_DIRECTORY = "/gnu/var/guix";
     GUIX_LOG_DIRECTORY = "/gnu/var/log";
-    GUIX_DATABASE_DIRECTORY = "/gnu/var/db";
+    GUIX_DATABASE_DIRECTORY = "/gnu/var/guix/db";
     NIX_STORE_DIR = "/gnu/store";
   };
 
