@@ -19,7 +19,7 @@
 , guilePackages
 , perl534Packages
 , storeDir ? "/gnu/store"
-, stateDir ? "/gnu/var"
+, stateDir ? "/var/guix"
 }:
 
 stdenv.mkDerivation rec {
