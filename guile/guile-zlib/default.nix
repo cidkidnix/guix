@@ -4,7 +4,7 @@
 , guile
 , libgcrypt
 , autoreconfHook
-, pkgconfig
+, pkg-config
 , texinfo
 , zlib
 }:
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     sed -i '/godir\s*=/s%=.*%=''${out}/share/guile/ccache%' Makefile;
   '';
 
-  nativeBuildInputs = [ autoreconfHook pkgconfig texinfo ];
+  nativeBuildInputs = [ autoreconfHook pkg-config texinfo ];
   buildInputs = [ guile zlib ];
 
   meta = with lib; {

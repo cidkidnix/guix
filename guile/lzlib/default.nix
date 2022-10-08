@@ -1,12 +1,11 @@
-{ stdenv, lib, fetchurl, guile, libgcrypt, autoreconfHook, pkgconfig, texinfo, }:
+{ stdenv, lib, fetchurl, guile, libgcrypt, autoreconfHook, pkg-config, texinfo, }:
 # https://git.savannah.gnu.org/cgit/guix.git/tree/gnu/packages/compression.scm#n1816
 stdenv.mkDerivation rec {
   pname = "lzlib";
   version = "1.13";
 
   src = fetchurl {
-    url =
-      "https://download.savannah.gnu.org/releases/lzip/${pname}/${pname}-${version}.tar.gz";
+    url = "https://download.savannah.gnu.org/releases/lzip/${pname}/${pname}-${version}.tar.gz";
     sha256 = "sha256-oatY8xSLpLJnTpOEOBZgQhN6knW+10cwZkGs/dyf+4A=";
   };
 
